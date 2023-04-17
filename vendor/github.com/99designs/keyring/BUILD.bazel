@@ -1,0 +1,48 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "keyring",
+    srcs = [
+        "array.go",
+        "config.go",
+        "file.go",
+        "keychain.go",
+        "keyctl.go",
+        "keyring.go",
+        "kwallet.go",
+        "pass.go",
+        "prompt.go",
+        "secretservice.go",
+        "tilde.go",
+        "wincred.go",
+    ],
+    importmap = "github.com/kublr/snowflake-poc/vendor/github.com/99designs/keyring",
+    importpath = "github.com/99designs/keyring",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//vendor/github.com/dvsekhvalnov/jose2go",
+        "//vendor/github.com/mtibben/percent",
+        "//vendor/golang.org/x/term",
+    ] + select({
+        "@io_bazel_rules_go//go/platform:android": [
+            "//vendor/github.com/godbus/dbus",
+            "//vendor/github.com/gsterjov/go-libsecret",
+            "//vendor/golang.org/x/sys/unix",
+        ],
+        "@io_bazel_rules_go//go/platform:darwin": [
+            "//vendor/github.com/99designs/go-keychain",
+        ],
+        "@io_bazel_rules_go//go/platform:ios": [
+            "//vendor/github.com/99designs/go-keychain",
+        ],
+        "@io_bazel_rules_go//go/platform:linux": [
+            "//vendor/github.com/godbus/dbus",
+            "//vendor/github.com/gsterjov/go-libsecret",
+            "//vendor/golang.org/x/sys/unix",
+        ],
+        "@io_bazel_rules_go//go/platform:windows": [
+            "//vendor/github.com/danieljoos/wincred",
+        ],
+        "//conditions:default": [],
+    }),
+)

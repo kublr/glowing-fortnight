@@ -1,0 +1,34 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "ipc",
+    srcs = [
+        "compression.go",
+        "endian_swap.go",
+        "file_reader.go",
+        "file_writer.go",
+        "ipc.go",
+        "message.go",
+        "metadata.go",
+        "reader.go",
+        "writer.go",
+    ],
+    importmap = "github.com/kublr/snowflake-poc/vendor/github.com/apache/arrow/go/v10/arrow/ipc",
+    importpath = "github.com/apache/arrow/go/v10/arrow/ipc",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//vendor/github.com/apache/arrow/go/v10/arrow",
+        "//vendor/github.com/apache/arrow/go/v10/arrow/array",
+        "//vendor/github.com/apache/arrow/go/v10/arrow/arrio",
+        "//vendor/github.com/apache/arrow/go/v10/arrow/bitutil",
+        "//vendor/github.com/apache/arrow/go/v10/arrow/endian",
+        "//vendor/github.com/apache/arrow/go/v10/arrow/internal",
+        "//vendor/github.com/apache/arrow/go/v10/arrow/internal/debug",
+        "//vendor/github.com/apache/arrow/go/v10/arrow/internal/dictutils",
+        "//vendor/github.com/apache/arrow/go/v10/arrow/internal/flatbuf",
+        "//vendor/github.com/apache/arrow/go/v10/arrow/memory",
+        "//vendor/github.com/google/flatbuffers/go",
+        "//vendor/github.com/klauspost/compress/zstd",
+        "//vendor/github.com/pierrec/lz4/v4:lz4",
+    ],
+)

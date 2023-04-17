@@ -1,0 +1,29 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "xxh3",
+    srcs = [
+        "accum_generic.go",
+        "accum_stubs_amd64.go",
+        "accum_stubs_other.go",
+        "accum_vector_avx512_amd64.s",
+        "accum_vector_avx_amd64.s",
+        "accum_vector_sse_amd64.s",
+        "consts.go",
+        "hash128.go",
+        "hash128_seed.go",
+        "hash64.go",
+        "hash64_seed.go",
+        "hasher.go",
+        "utils.go",
+    ],
+    importmap = "github.com/kublr/snowflake-poc/vendor/github.com/zeebo/xxh3",
+    importpath = "github.com/zeebo/xxh3",
+    visibility = ["//visibility:public"],
+    deps = select({
+        "@io_bazel_rules_go//go/platform:amd64": [
+            "//vendor/github.com/klauspost/cpuid/v2:cpuid",
+        ],
+        "//conditions:default": [],
+    }),
+)

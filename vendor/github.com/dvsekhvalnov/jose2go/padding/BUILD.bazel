@@ -1,0 +1,12 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "padding",
+    srcs = [
+        "align.go",
+        "pkcs7.go",
+    ],
+    importmap = "github.com/kublr/snowflake-poc/vendor/github.com/dvsekhvalnov/jose2go/padding",
+    importpath = "github.com/dvsekhvalnov/jose2go/padding",
+    visibility = ["//visibility:public"],
+)

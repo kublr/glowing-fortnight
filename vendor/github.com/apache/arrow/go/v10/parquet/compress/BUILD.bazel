@@ -1,0 +1,23 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "compress",
+    srcs = [
+        "brotli.go",
+        "compress.go",
+        "gzip.go",
+        "snappy.go",
+        "zstd.go",
+    ],
+    importmap = "github.com/kublr/snowflake-poc/vendor/github.com/apache/arrow/go/v10/parquet/compress",
+    importpath = "github.com/apache/arrow/go/v10/parquet/compress",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//vendor/github.com/andybalholm/brotli",
+        "//vendor/github.com/apache/arrow/go/v10/parquet/internal/debug",
+        "//vendor/github.com/apache/arrow/go/v10/parquet/internal/gen-go/parquet",
+        "//vendor/github.com/golang/snappy",
+        "//vendor/github.com/klauspost/compress/gzip",
+        "//vendor/github.com/klauspost/compress/zstd",
+    ],
+)

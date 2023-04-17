@@ -1,0 +1,57 @@
+{{- if .Values.ingress.enabled -}}
+{{- $extraPaths := .Values.ingress.extraPaths -}}
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ template "helm-snowflake-poc.fullname" . }}
+  labels:
+    app: {{ template "helm-snowflake-poc.name" . }}
+    chart: {{ template "helm-snowflake-poc.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+  {{- if .Values.ingress.annotations }}
+  annotations:
+    {{- range $key, $value := .Values.ingress.annotations }}
+    {{ $key }}: {{ $value | quote }}
+    {{- end }}
+  {{- end }}
+spec:
+  {{- with .Values.ingress.ingressClassName }}
+  ingressClassName: {{ . }}
+  {{- end }}
+  rules:
+  {{- if .Values.ingress.hosts }}
+    {{- range $host := .Values.ingress.hosts }}
+    - host: {{ $host | quote }}
+      http:
+        paths:
+          {{- with $extraPaths }}
+          {{- toYaml . | nindent 10 }}
+          {{- end }}
+          - path: {{ .Values.ingress.path }}
+            pathType: {{ .Values.ingress.pathType }}
+            backend:
+              service:
+                name: {{ template "helm-snowflake-poc.fullname" . }}
+                port:
+                  name: http
+    {{- end -}}
+  {{- else }}
+    - http:
+        paths:
+          {{- with $extraPaths }}
+          {{- toYaml . | nindent 10 }}
+          {{- end }}
+          - path: {{ .Values.ingress.path }}
+            pathType: {{ .Values.ingress.pathType }}
+            backend:
+              service:
+                name: {{ template "helm-snowflake-poc.fullname" . }}
+                port:
+                  name: http
+  {{- end -}}
+  {{- with .Values.ingress.tls }}
+  tls:
+    {{- toYaml . | nindent 4 }}
+  {{- end -}}
+{{- end -}}

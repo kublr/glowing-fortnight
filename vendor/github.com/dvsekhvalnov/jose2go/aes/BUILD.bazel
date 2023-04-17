@@ -1,0 +1,13 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "aes",
+    srcs = [
+        "ecb.go",
+        "key_wrap.go",
+    ],
+    importmap = "github.com/kublr/snowflake-poc/vendor/github.com/dvsekhvalnov/jose2go/aes",
+    importpath = "github.com/dvsekhvalnov/jose2go/aes",
+    visibility = ["//visibility:public"],
+    deps = ["//vendor/github.com/dvsekhvalnov/jose2go/arrays"],
+)

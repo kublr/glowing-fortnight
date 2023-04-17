@@ -1,0 +1,15 @@
+<html>
+    <body>
+        {{- if not .Error}}
+        <table>
+            <caption>Clients table sample ({{.PageSize}} out of {{.Total}})</caption>
+            <tr><th bgcolor="#0000E0">Client name</th></tr>
+            {{- range .Data}}
+            <tr><td>{{.Name}}</td></tr>
+            {{- end}}
+        </table>
+        {{- else}}
+        <pre>{{.Error}}</pre>
+        {{- end}}
+    </body>
+</html>

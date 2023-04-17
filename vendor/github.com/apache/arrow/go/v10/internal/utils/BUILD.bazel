@@ -1,0 +1,46 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "utils",
+    srcs = [
+        "buf_reader.go",
+        "endians_default.go",
+        "endians_s390x.go",
+        "math.go",
+        "min_max.go",
+        "min_max_amd64.go",
+        "min_max_arm64.go",
+        "min_max_avx2_amd64.go",
+        "min_max_avx2_amd64.s",
+        "min_max_neon_arm64.go",
+        "min_max_neon_arm64.s",
+        "min_max_ppc64le.go",
+        "min_max_s390x.go",
+        "min_max_sse4_amd64.go",
+        "min_max_sse4_amd64.s",
+        "transpose_ints.go",
+        "transpose_ints_amd64.go",
+        "transpose_ints_arm64.go",
+        "transpose_ints_avx2_amd64.go",
+        "transpose_ints_avx2_amd64.s",
+        "transpose_ints_def.go",
+        "transpose_ints_ppc64le.go",
+        "transpose_ints_s390x.go",
+        "transpose_ints_sse4_amd64.go",
+        "transpose_ints_sse4_amd64.s",
+    ],
+    importmap = "github.com/kublr/snowflake-poc/vendor/github.com/apache/arrow/go/v10/internal/utils",
+    importpath = "github.com/apache/arrow/go/v10/internal/utils",
+    visibility = ["//vendor/github.com/apache/arrow/go/v10:__subpackages__"],
+    deps = [
+        "//vendor/github.com/apache/arrow/go/v10/arrow",
+    ] + select({
+        "@io_bazel_rules_go//go/platform:amd64": [
+            "//vendor/golang.org/x/sys/cpu",
+        ],
+        "@io_bazel_rules_go//go/platform:arm64": [
+            "//vendor/golang.org/x/sys/cpu",
+        ],
+        "//conditions:default": [],
+    }),
+)

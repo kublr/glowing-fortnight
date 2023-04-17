@@ -1,0 +1,37 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "memory",
+    srcs = [
+        "allocator.go",
+        "buffer.go",
+        "checked_allocator.go",
+        "doc.go",
+        "go_allocator.go",
+        "memory.go",
+        "memory_amd64.go",
+        "memory_arm64.go",
+        "memory_avx2_amd64.go",
+        "memory_avx2_amd64.s",
+        "memory_js_wasm.go",
+        "memory_neon_arm64.go",
+        "memory_neon_arm64.s",
+        "memory_sse4_amd64.go",
+        "memory_sse4_amd64.s",
+        "util.go",
+    ],
+    importmap = "github.com/kublr/snowflake-poc/vendor/github.com/apache/arrow/go/v10/arrow/memory",
+    importpath = "github.com/apache/arrow/go/v10/arrow/memory",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//vendor/github.com/apache/arrow/go/v10/arrow/internal/debug",
+    ] + select({
+        "@io_bazel_rules_go//go/platform:amd64": [
+            "//vendor/golang.org/x/sys/cpu",
+        ],
+        "@io_bazel_rules_go//go/platform:arm64": [
+            "//vendor/golang.org/x/sys/cpu",
+        ],
+        "//conditions:default": [],
+    }),
+)

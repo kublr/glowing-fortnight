@@ -8,17 +8,17 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Bazel cache
         id: bazel-cache
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: '~/.cache/bazel'
           key: bazel-cache
 
       - name: Login to Docker Hub
-        uses: docker/login-action@v1
+        uses: docker/login-action@v2
         with:
           registry: docker-registry.kcp.kublr-demo.com
           username: ${{ secrets.DOCKER_REGISTRY_USERNAME }}

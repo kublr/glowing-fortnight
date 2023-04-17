@@ -1,0 +1,13 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "debug",
+    srcs = [
+        "assert_off.go",
+        "doc.go",
+        "log_off.go",
+    ],
+    importmap = "github.com/kublr/snowflake-poc/vendor/github.com/apache/arrow/go/v10/arrow/internal/debug",
+    importpath = "github.com/apache/arrow/go/v10/arrow/internal/debug",
+    visibility = ["//vendor/github.com/apache/arrow/go/v10/arrow:__subpackages__"],
+)

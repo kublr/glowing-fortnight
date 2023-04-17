@@ -1,0 +1,34 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "go-keychain",
+    srcs = [
+        "corefoundation.go",
+        "datetime.go",
+        "ios.go",
+        "keychain.go",
+        "macos.go",
+        "util.go",
+    ],
+    cgo = True,
+    clinkopts = select({
+        "@io_bazel_rules_go//go/platform:darwin": [
+            "-framework CoreFoundation",
+            "-framework CoreFoundation -framework Security",
+        ],
+        "@io_bazel_rules_go//go/platform:ios": [
+            "-framework CoreFoundation",
+            "-framework CoreFoundation -framework Security",
+        ],
+        "//conditions:default": [],
+    }),
+    copts = select({
+        "@io_bazel_rules_go//go/platform:darwin": [
+            "-w",
+        ],
+        "//conditions:default": [],
+    }),
+    importmap = "github.com/kublr/snowflake-poc/vendor/github.com/99designs/go-keychain",
+    importpath = "github.com/99designs/go-keychain",
+    visibility = ["//visibility:public"],
+)

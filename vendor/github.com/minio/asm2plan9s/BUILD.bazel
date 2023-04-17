@@ -1,0 +1,21 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_binary", "go_library")
+
+go_library(
+    name = "asm2plan9s_lib",
+    srcs = [
+        "asm2plan9s.go",
+        "asm2plan9s_amd64.go",
+        "asm2plan9s_arm64.go",
+        "example.s",
+        "yasm.go",
+    ],
+    importmap = "github.com/kublr/snowflake-poc/vendor/github.com/minio/asm2plan9s",
+    importpath = "github.com/minio/asm2plan9s",
+    visibility = ["//visibility:private"],
+)
+
+go_binary(
+    name = "asm2plan9s",
+    embed = [":asm2plan9s_lib"],
+    visibility = ["//visibility:public"],
+)

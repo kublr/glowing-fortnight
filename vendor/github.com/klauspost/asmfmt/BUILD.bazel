@@ -1,0 +1,9 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "asmfmt",
+    srcs = ["asmfmt.go"],
+    importmap = "github.com/kublr/snowflake-poc/vendor/github.com/klauspost/asmfmt",
+    importpath = "github.com/klauspost/asmfmt",
+    visibility = ["//visibility:public"],
+)

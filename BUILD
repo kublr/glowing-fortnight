@@ -10,13 +10,20 @@ load("@bazel_gazelle//:def.bzl", "gazelle")
 #
 # gazelle:prefix github.com/kublr/snowflake-poc
 
+# This is excluded because gazelle does not understand cgo pkg-config directive in the mongocrypt.go
+# Excluding it is ok because it is only used when compiled with "ccalloc" tag, which we don't do.
+# "ccalloc" tag is necessary to use C++ memory allocator in Apache Arrow library.
+#
+# gazelle:exclude vendor/github.com/apache/arrow/go/v10/arrow/memory/internal/cgoalloc/allocator.go
+
 # Updating vendored dependencies - run in the workspace root:
+#   go get -u <package>
 #   go mod tidy
 #   go mod vendor
+#   bazel run :gazelle-update-repos
 #   find vendor '(' -name BUILD.bazel -o -name BUILD ')' -delete
 #   bazel run :gazelle
 #   find . '(' -name BUILD.bazel -o -name BUILD ')' -size 0c -delete
-#   bazel run :gazelle-update-repos
 
 # run "bazel run :gazelle" to update dependencies in BUILD files (or generate new) in go packages
 gazelle(name = "gazelle")
@@ -39,7 +46,7 @@ gazelle(
     command = "update-repos",
 )
 
-# Docker image
+# # Docker image
 pkg_tar(
     name = "image-tar-binary",
     files = {":snowflake-poc": "snowflake-poc"},
@@ -55,26 +62,22 @@ container_layer(
 
 container_image(
     name = "image",
-    # base = "",
+    base = "@base-distroless-image//image",
     creation_time = "0",
     entrypoint = ["/opt/snowflake-poc/snowflake-poc"],
-    # env = {
-    #     # TODO: do we need this env var in the image? it seems to be a leftover from Docker
-    #     "HELM_VERSION": "v3.4.0",
-    # },
     layers = [":image-layer-binary"],
-    ports = ["8080"],
+    ports = ["4080"],
     workdir = "/opt/snowflake-poc",
 )
 
 container_push(
     name = "release",
+    format = "Docker",
     image = ":image",
     registry = "docker-registry.kcp.kublr-demo.com",
     repository = "snowflake-poc/ui",
-    tag = "{STABLE_BUILD_GIT_COMMIT}",
     skip_unchanged_digest = False,
-    format = "Docker",
+    tag = "{STABLE_BUILD_GIT_COMMIT}",
 )
 
 # gazelle generated go targets
@@ -83,6 +86,7 @@ go_library(
     srcs = ["main.go"],
     importpath = "github.com/kublr/snowflake-poc",
     visibility = ["//visibility:private"],
+    deps = ["//cmd"],
 )
 
 go_binary(

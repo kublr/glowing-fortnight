@@ -1,0 +1,38 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "jose2go",
+    srcs = [
+        "aes_cbc_hmac.go",
+        "aes_gcm.go",
+        "aes_gcm_kw.go",
+        "aeskw.go",
+        "deflate.go",
+        "direct.go",
+        "ecdh.go",
+        "ecdh_aeskw.go",
+        "ecdsa_using_sha.go",
+        "hmac.go",
+        "hmac_using_sha.go",
+        "jose.go",
+        "pbse2_hmac_aeskw.go",
+        "plaintext.go",
+        "rsa_oaep.go",
+        "rsa_pkcs1v15.go",
+        "rsa_using_sha.go",
+        "rsapss_using_sha.go",
+        "sha.go",
+    ],
+    importmap = "github.com/kublr/snowflake-poc/vendor/github.com/dvsekhvalnov/jose2go",
+    importpath = "github.com/dvsekhvalnov/jose2go",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//vendor/github.com/dvsekhvalnov/jose2go/aes",
+        "//vendor/github.com/dvsekhvalnov/jose2go/arrays",
+        "//vendor/github.com/dvsekhvalnov/jose2go/base64url",
+        "//vendor/github.com/dvsekhvalnov/jose2go/compact",
+        "//vendor/github.com/dvsekhvalnov/jose2go/kdf",
+        "//vendor/github.com/dvsekhvalnov/jose2go/keys/ecc",
+        "//vendor/github.com/dvsekhvalnov/jose2go/padding",
+    ],
+)

@@ -1,0 +1,26 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: snowflake-poc-aws-demo
+  namespace: argocd
+spec:
+  destination:
+    name: aws-demo
+    namespace: snowflake-poc
+  project: default
+  source:
+    helm:
+      parameters:
+      - name: image.tag
+        value: $ARGOCD_APP_REVISION
+      values: |-
+        ingress:
+          enabled: true
+        imagePullSecrets: [{name: regcred}]
+    path: kubernetes/chart
+    repoURL: https://github.com/kublr/snowflake-poc
+    targetRevision: main
+  syncPolicy:
+    automated: {}
+    syncOptions:
+      - CreateNamespace=true

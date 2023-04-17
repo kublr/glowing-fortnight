@@ -1,0 +1,33 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "bitutil",
+    srcs = [
+        "bitmap_ops.go",
+        "bitmap_ops_amd64.go",
+        "bitmap_ops_arm64.go",
+        "bitmap_ops_avx2_amd64.go",
+        "bitmap_ops_avx2_amd64.s",
+        "bitmap_ops_ppc64le.go",
+        "bitmap_ops_s390x.go",
+        "bitmap_ops_sse4_amd64.go",
+        "bitmap_ops_sse4_amd64.s",
+        "bitmaps.go",
+        "bitutil.go",
+        "endian_default.go",
+        "endian_s390x.go",
+    ],
+    importmap = "github.com/kublr/snowflake-poc/vendor/github.com/apache/arrow/go/v10/arrow/bitutil",
+    importpath = "github.com/apache/arrow/go/v10/arrow/bitutil",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//vendor/github.com/apache/arrow/go/v10/arrow/endian",
+        "//vendor/github.com/apache/arrow/go/v10/arrow/internal/debug",
+        "//vendor/github.com/apache/arrow/go/v10/arrow/memory",
+    ] + select({
+        "@io_bazel_rules_go//go/platform:amd64": [
+            "//vendor/golang.org/x/sys/cpu",
+        ],
+        "//conditions:default": [],
+    }),
+)

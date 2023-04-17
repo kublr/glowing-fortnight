@@ -1,0 +1,10 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "compact",
+    srcs = ["compact.go"],
+    importmap = "github.com/kublr/snowflake-poc/vendor/github.com/dvsekhvalnov/jose2go/compact",
+    importpath = "github.com/dvsekhvalnov/jose2go/compact",
+    visibility = ["//visibility:public"],
+    deps = ["//vendor/github.com/dvsekhvalnov/jose2go/base64url"],
+)

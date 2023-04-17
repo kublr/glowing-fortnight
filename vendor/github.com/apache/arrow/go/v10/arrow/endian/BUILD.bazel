@@ -1,0 +1,17 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "endian",
+    srcs = [
+        "big.go",
+        "endian.go",
+        "little.go",
+    ],
+    importmap = "github.com/kublr/snowflake-poc/vendor/github.com/apache/arrow/go/v10/arrow/endian",
+    importpath = "github.com/apache/arrow/go/v10/arrow/endian",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//vendor/github.com/apache/arrow/go/v10/arrow/internal/debug",
+        "//vendor/github.com/apache/arrow/go/v10/arrow/internal/flatbuf",
+    ],
+)

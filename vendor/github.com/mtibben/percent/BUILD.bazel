@@ -1,0 +1,9 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "percent",
+    srcs = ["percent.go"],
+    importmap = "github.com/kublr/snowflake-poc/vendor/github.com/mtibben/percent",
+    importpath = "github.com/mtibben/percent",
+    visibility = ["//visibility:public"],
+)

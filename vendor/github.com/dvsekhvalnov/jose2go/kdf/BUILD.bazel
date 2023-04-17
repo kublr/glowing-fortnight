@@ -1,0 +1,13 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "kdf",
+    srcs = [
+        "nist_sp800_56a.go",
+        "pbkdf2.go",
+    ],
+    importmap = "github.com/kublr/snowflake-poc/vendor/github.com/dvsekhvalnov/jose2go/kdf",
+    importpath = "github.com/dvsekhvalnov/jose2go/kdf",
+    visibility = ["//visibility:public"],
+    deps = ["//vendor/github.com/dvsekhvalnov/jose2go/arrays"],
+)

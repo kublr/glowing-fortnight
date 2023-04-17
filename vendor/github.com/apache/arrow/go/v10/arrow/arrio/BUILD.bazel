@@ -1,0 +1,10 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "arrio",
+    srcs = ["arrio.go"],
+    importmap = "github.com/kublr/snowflake-poc/vendor/github.com/apache/arrow/go/v10/arrow/arrio",
+    importpath = "github.com/apache/arrow/go/v10/arrow/arrio",
+    visibility = ["//visibility:public"],
+    deps = ["//vendor/github.com/apache/arrow/go/v10/arrow"],
+)

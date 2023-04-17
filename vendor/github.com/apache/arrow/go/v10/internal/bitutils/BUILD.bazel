@@ -1,0 +1,19 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "bitutils",
+    srcs = [
+        "bit_block_counter.go",
+        "bit_run_reader.go",
+        "bit_set_run_reader.go",
+        "bitmap_generate.go",
+    ],
+    importmap = "github.com/kublr/snowflake-poc/vendor/github.com/apache/arrow/go/v10/internal/bitutils",
+    importpath = "github.com/apache/arrow/go/v10/internal/bitutils",
+    visibility = ["//vendor/github.com/apache/arrow/go/v10:__subpackages__"],
+    deps = [
+        "//vendor/github.com/apache/arrow/go/v10/arrow",
+        "//vendor/github.com/apache/arrow/go/v10/arrow/bitutil",
+        "//vendor/github.com/apache/arrow/go/v10/internal/utils",
+    ],
+)

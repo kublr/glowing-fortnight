@@ -1,0 +1,9 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "ecc",
+    srcs = ["ecc.go"],
+    importmap = "github.com/kublr/snowflake-poc/vendor/github.com/dvsekhvalnov/jose2go/keys/ecc",
+    importpath = "github.com/dvsekhvalnov/jose2go/keys/ecc",
+    visibility = ["//visibility:public"],
+)

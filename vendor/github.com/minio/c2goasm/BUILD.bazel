@@ -1,0 +1,22 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_binary", "go_library")
+
+go_library(
+    name = "c2goasm_lib",
+    srcs = [
+        "arguments.go",
+        "assembly.go",
+        "c2goasm.go",
+        "constants.go",
+        "epilogue.go",
+        "subroutine.go",
+    ],
+    importmap = "github.com/kublr/snowflake-poc/vendor/github.com/minio/c2goasm",
+    importpath = "github.com/minio/c2goasm",
+    visibility = ["//visibility:private"],
+)
+
+go_binary(
+    name = "c2goasm",
+    embed = [":c2goasm_lib"],
+    visibility = ["//visibility:public"],
+)

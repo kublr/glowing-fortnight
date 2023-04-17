@@ -1,0 +1,17 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "go-libsecret",
+    srcs = [
+        "collection.go",
+        "item.go",
+        "prompt.go",
+        "secret.go",
+        "service.go",
+        "session.go",
+    ],
+    importmap = "github.com/kublr/snowflake-poc/vendor/github.com/gsterjov/go-libsecret",
+    importpath = "github.com/gsterjov/go-libsecret",
+    visibility = ["//visibility:public"],
+    deps = ["//vendor/github.com/godbus/dbus"],
+)

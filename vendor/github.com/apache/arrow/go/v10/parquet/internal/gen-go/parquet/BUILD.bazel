@@ -1,0 +1,14 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "parquet",
+    srcs = [
+        "GoUnusedProtection__.go",
+        "parquet.go",
+        "parquet-consts.go",
+    ],
+    importmap = "github.com/kublr/snowflake-poc/vendor/github.com/apache/arrow/go/v10/parquet/internal/gen-go/parquet",
+    importpath = "github.com/apache/arrow/go/v10/parquet/internal/gen-go/parquet",
+    visibility = ["//vendor/github.com/apache/arrow/go/v10/parquet:__subpackages__"],
+    deps = ["//vendor/github.com/apache/thrift/lib/go/thrift"],
+)

@@ -97,7 +97,13 @@ load("@io_bazel_rules_docker//repositories:deps.bzl", container_deps = "deps")
 
 container_deps()
 
-## all custom Kublr dependencies used in kublr projects
-# load("//:deps-kublr.bzl", "kublr_dependencies")
-
-# kublr_dependencies()
+## all custom Kublr dependencies used in the project
+load("@io_bazel_rules_docker//container:container.bzl", "container_pull")
+container_pull(
+    name = "base-distroless-image",
+    registry = "gcr.io",
+    repository = "distroless/base-debian11",
+    # architecture = "amd64",
+    # tag = "latest",
+    digest = "sha256:8267a5d9fa15a538227a8850e81cf6c548a78de73458e99a67e8799bbffb1ba0"
+)

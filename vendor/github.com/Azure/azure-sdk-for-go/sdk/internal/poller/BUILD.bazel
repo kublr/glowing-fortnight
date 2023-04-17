@@ -1,0 +1,10 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "poller",
+    srcs = ["util.go"],
+    importmap = "github.com/kublr/snowflake-poc/vendor/github.com/Azure/azure-sdk-for-go/sdk/internal/poller",
+    importpath = "github.com/Azure/azure-sdk-for-go/sdk/internal/poller",
+    visibility = ["//vendor/github.com/Azure/azure-sdk-for-go/sdk:__subpackages__"],
+    deps = ["//vendor/github.com/Azure/azure-sdk-for-go/sdk/internal/exported"],
+)

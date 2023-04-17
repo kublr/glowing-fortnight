@@ -1,0 +1,10 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "decimal128",
+    srcs = ["decimal128.go"],
+    importmap = "github.com/kublr/snowflake-poc/vendor/github.com/apache/arrow/go/v10/arrow/decimal128",
+    importpath = "github.com/apache/arrow/go/v10/arrow/decimal128",
+    visibility = ["//visibility:public"],
+    deps = ["//vendor/github.com/apache/arrow/go/v10/arrow/internal/debug"],
+)

@@ -1,0 +1,19 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_binary", "go_library")
+
+go_library(
+    name = "asmfmt_lib",
+    srcs = [
+        "doc.go",
+        "main.go",
+    ],
+    importmap = "github.com/kublr/snowflake-poc/vendor/github.com/klauspost/asmfmt/cmd/asmfmt",
+    importpath = "github.com/klauspost/asmfmt/cmd/asmfmt",
+    visibility = ["//visibility:private"],
+    deps = ["//vendor/github.com/klauspost/asmfmt"],
+)
+
+go_binary(
+    name = "asmfmt",
+    embed = [":asmfmt_lib"],
+    visibility = ["//visibility:public"],
+)

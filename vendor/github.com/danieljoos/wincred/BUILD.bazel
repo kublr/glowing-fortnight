@@ -1,0 +1,22 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "wincred",
+    srcs = [
+        "conversion.go",
+        "conversion_unsupported.go",
+        "sys.go",
+        "sys_unsupported.go",
+        "types.go",
+        "wincred.go",
+    ],
+    importmap = "github.com/kublr/snowflake-poc/vendor/github.com/danieljoos/wincred",
+    importpath = "github.com/danieljoos/wincred",
+    visibility = ["//visibility:public"],
+    deps = select({
+        "@io_bazel_rules_go//go/platform:windows": [
+            "//vendor/golang.org/x/sys/windows",
+        ],
+        "//conditions:default": [],
+    }),
+)
