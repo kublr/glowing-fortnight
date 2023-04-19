@@ -16,7 +16,7 @@ import (
 	"github.com/spf13/cobra"
 )
 
-const RECORDS_LIMIT = 10
+const RECORDS_LIMIT = 15
 
 var rootCmd = &cobra.Command{
 	Use:   "snowflake-poc",
